@@ -1,0 +1,39 @@
+{
+  "name": "sns-payload-validator",
+  "version": "1.0.0",
+  "description": "Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda.",
+  "main": "lib/index",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@hapi/code": "^8.0.3",
+    "@hapi/lab": "^24.3.2",
+    "nock": "^13.1.3",
+    "node-forge": "^0.10.0",
+    "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "test": "lab -a @hapi/code -t 100 -L -m 10000 -Y",
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L -m 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devinstewart/sns-payload-validator.git"
+  },
+  "keywords": [
+    "AWS",
+    "SNS",
+    "Validate",
+    "JavaScript",
+    "node"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "plugin:@hapi/module"
+    ]
+  },
+  "author": "Devin Stewart",
+  "license": "MIT"
+}
