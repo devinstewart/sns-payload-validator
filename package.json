@@ -8,7 +8,7 @@
     "lib"
   ],
   "devDependencies": {
-    "@hapi/code": "^8.0.3",
+    "@hapi/code": "^9.0.1",
     "@hapi/lab": "^24.3.2",
     "@types/node": "^18.0.0",
     "nock": "^13.1.3",
