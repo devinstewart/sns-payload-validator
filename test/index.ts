@@ -15,4 +15,7 @@ Validator.validate(Mock.validNotification)
     .then((payload: any) => {
 
         expect(payload).to.equal(Mock.validNotification);
-});
+    }).catch((err: any) => {
+
+        expect(err).to.not.exist();
+    });
