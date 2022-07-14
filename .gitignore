@@ -9,3 +9,5 @@ coverage.*
 **/.vs
 **/.vscode
 **/.idea
+
+.dccache
