@@ -25,6 +25,9 @@ describe('test validate() with promises', () => {
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validNotification);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
             });
     });
 
@@ -34,6 +37,9 @@ describe('test validate() with promises', () => {
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validNotificationWithSubject);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
             });
     });
 
@@ -43,6 +49,9 @@ describe('test validate() with promises', () => {
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validSubscriptionConfirmation);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
             });
     });
 
@@ -52,6 +61,9 @@ describe('test validate() with promises', () => {
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validUnsubscribeConfirmation);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
             });
     });
 
@@ -61,6 +73,9 @@ describe('test validate() with promises', () => {
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validLambdaNotification);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
             });
     });
 
