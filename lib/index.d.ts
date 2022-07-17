@@ -1,5 +1,19 @@
 /// <reference types="node" />
 
+interface SnsPayload {
+    Type: 'Notification' | 'SubscriptionConfirmation' | 'UnsubscribeConfirmation';
+    MessageId: string;
+    Token?: string;
+    TopicArn: string;
+    Subject?: string;
+    Message: string;
+    Timestamp: string;
+    SignatureVersion: '1';
+    Signature: string;
+    SigningCertURL: string;
+    SubscribeURL?: string;
+    UnsubscribeURL?: string;
+}
 declare class Validator {
 
     /**
@@ -9,7 +23,7 @@ declare class Validator {
     * @param callback - Optional callback, if not passed a Promise is returned.
     * @returns If no callback is passed, a Promise is returned.
     */
-    validate(payload: Object|String, callback?: (err: Error, payload: any) => void): any;
+    validate(payload: SnsPayload|String, callback?: (err: Error, payload: SnsPayload) => void): Promise<SnsPayload>;
 }
 
 declare const validator: Validator;
