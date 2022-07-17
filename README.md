@@ -56,7 +56,7 @@ Validator.validate(payloadFromRequest, (err, validPayload) => {
 
 TypeScript is also supported by using: `import Valiadator from ('sns-payload-validator')`, then using any of the three methods above.\
 \
-AWS SNS sends HTTP/S POSTS with the Content-Type of `text/plain`.  Therefore, if there is a need to manipulate the payload before sending it to the AWS SNS Payload Validator, `JSON.parse()` must be used. AWS SNS Payload Validator excepts the payload as a valid JSON `string` or a JavaScript `Object`.  The return value is parsed into a JavaScript `Object`, so it is recommended to do any manipulation on the return value.
+AWS SNS sends HTTP/S POSTS with the Content-Type of `text/plain`.  Therefore, if there is a need to manipulate the payload before sending it to the AWS SNS Payload Validator, `JSON.parse()` must be used. AWS SNS Payload Validator accepts the payload as a valid JSON `string` or a JavaScript `Object`.  The return value is parsed into a JavaScript `Object`, so it is recommended to do any manipulation on the return value.
 
 ## Examples with Types
 
