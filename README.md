@@ -1,6 +1,8 @@
 # AWS SNS Payload Validator
 Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. The payload / error is then sent to either a Promise, or a callback if one is provided.
 
+## Status and Testing
+Check the [status](https://github.com/devinstewart/sns-tester/blob/main/status).  This module is tested daily at 12:00 UTC on a live AWS account using SNS via the code found in the [sns-tester](https://github.com/devinstewart/sns-tester) repository.
 ## Installing
 Using npm:
 ```bash
