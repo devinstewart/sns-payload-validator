@@ -25,3 +25,23 @@ jobs:
         run: npm install
       - name: test
         run: npm test
+      - name: coverage
+        run: ./node_modules/.bin/lab -r lcov -o lcov.info
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: coverage.info
+          github-token: ${{ secrets.github_token }}
+          flag-name: npm run test-cov-lcov
+          coveralls-parallel: true
+          parallel: true
+
+  finish:
+    needs: test
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true

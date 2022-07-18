@@ -17,7 +17,8 @@
   },
   "scripts": {
     "test": "lab -a @hapi/code -t 100 -L -m 10000 -Y",
-    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L -m 10000"
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L -m 10000",
+    "test-cov-lcov": "lab -r lcov -o coverage.info"
   },
   "repository": {
     "type": "git",
