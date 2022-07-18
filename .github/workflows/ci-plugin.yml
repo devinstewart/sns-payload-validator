@@ -34,7 +34,6 @@ jobs:
           github-token: ${{ secrets.github_token }}
           flag-name: npm run test-cov-lcov
           coveralls-parallel: true
-          parallel: true
 
   finish:
     needs: test
