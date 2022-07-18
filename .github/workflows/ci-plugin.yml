@@ -26,7 +26,7 @@ jobs:
       - name: test
         run: npm test
       - name: coverage
-        run: ./node_modules/.bin/lab -r lcov -o lcov.info
+        run: npm run test-cov-lcov
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
