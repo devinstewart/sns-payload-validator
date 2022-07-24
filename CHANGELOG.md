@@ -1,3 +1,9 @@
+**v.1.0.3 Badges and an Interface**
+- make the `SnsPayload` interface available to import
+- add Badges to the README.md
+- hookup coveralls.io
+- create CONTIRBUTING.md
+
 **v1.0.2 - Improved Typescript, added testing link**
 - define SnsPayload interface instead of using any \(Typscript)
 - grammer fix in README.md
