@@ -1,3 +1,7 @@
+**v1.0.4 Interface Bug**
+- include the interface directly in the module.
+- fix spelling of CONTRIBUTING.md
+
 **v.1.0.3 Badges and an Interface**
 - make the `SnsPayload` interface available to import
 - add Badges to the README.md
