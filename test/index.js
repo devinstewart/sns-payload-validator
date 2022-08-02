@@ -12,17 +12,17 @@ const expect = Code.expect;
 
 const setupMock = () => {
 
-    Nock(Mock.SigningCertHost)
-        .get(Mock.SigningCertPath)
-        .reply(200, Mock.pem);
+    beforeEach(() => {
+
+        Nock(Mock.SigningCertHost)
+            .get(Mock.SigningCertPath)
+            .reply(200, Mock.pem);
+    });
 };
 
 describe('test validate() with promises', () => {
 
-    beforeEach(() => {
-
-        setupMock();
-    });
+    setupMock();
 
     it('succussfully validates HTTP/S Notification', () => {
 
@@ -141,10 +141,7 @@ describe('test validate() with promises', () => {
 
 describe('test validate() with callbacks', () => {
 
-    beforeEach(() => {
-
-        setupMock();
-    });
+    setupMock();
 
     it('succussfully validates HTTP/S Notification', () => {
 
