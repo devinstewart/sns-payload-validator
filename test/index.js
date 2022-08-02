@@ -10,7 +10,7 @@ const Mock = require('./mock');
 const { it, describe, beforeEach } = exports.lab = Lab.script();
 const expect = Code.expect;
 
-describe('test validate() with promises', () => {
+const setupMockBeforeEach = () => {
 
     beforeEach(() => {
 
@@ -18,6 +18,11 @@ describe('test validate() with promises', () => {
             .get(Mock.SigningCertPath)
             .reply(200, Mock.pem);
     });
+};
+
+describe('test validate() with promises', () => {
+
+    setupMockBeforeEach();
 
     it('succussfully validates HTTP/S Notification', () => {
 
@@ -136,12 +141,7 @@ describe('test validate() with promises', () => {
 
 describe('test validate() with callbacks', () => {
 
-    beforeEach(() => {
-
-        Nock(Mock.SigningCertHost)
-            .get(Mock.SigningCertPath)
-            .reply(200, Mock.pem);
-    });
+    setupMockBeforeEach();
 
     it('succussfully validates HTTP/S Notification', () => {
 
