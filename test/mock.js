@@ -144,7 +144,7 @@ internals.Mock = class {
         Message: 'Hello SNS!',
         Timestamp: (new Date()).toISOString(),
         SignatureVersion: '1',
-        SigningCertURL: 'http://badactor.com/SimpleNotificationService-0123456789abcdef0123456789abcdef.pem'
+        SigningCertURL: 'https://badactor.com/SimpleNotificationService-0123456789abcdef0123456789abcdef.pem'
     };
 
     invalidSignature = {
