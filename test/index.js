@@ -19,7 +19,10 @@ const setupMock = () => {
 
 describe('test validate() with promises', () => {
 
-    beforeEach(setupMock());
+    beforeEach(() => {
+
+        setupMock();
+    });
 
     it('succussfully validates HTTP/S Notification', () => {
 
@@ -138,7 +141,10 @@ describe('test validate() with promises', () => {
 
 describe('test validate() with callbacks', () => {
 
-    beforeEach(setupMock());
+    beforeEach(() => {
+
+        setupMock();
+    });
 
     it('succussfully validates HTTP/S Notification', () => {
 
