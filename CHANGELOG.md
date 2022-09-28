@@ -1,3 +1,8 @@
+**v1.1.0 SignatureVersion 2 Support**
+- added support for `SignatureVersion` 2
+- added badges to README.md from sonarcloud.io
+- removed redundant code in tests
+
 **v1.0.4 Interface Bug**
 - include the interface directly in the module.
 - fix spelling of CONTRIBUTING.md
