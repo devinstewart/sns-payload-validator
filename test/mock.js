@@ -20,9 +20,9 @@ const privateKeyPem = Forge.pki.privateKeyToPem(pair.privateKey);
 const internals = {};
 
 // Function to Add Signature to valid payloads with private key used in certificate
-internals.addSignature = (payload) => {
+internals.addSignature = (payload, signatureVersion = '1') => {
 
-    const sign = Crypto.createSign('sha1WithRSAEncryption');
+    const sign = signatureVersion === '1' ? Crypto.createSign('sha1WithRSAEncryption') : Crypto.createSign('sha256WithRSAEncryption');
     const keys = Keys.getKeys(payload.Type);
     for (const key of keys) {
         // If Subject is not given, Lambda sets it to null, but is not used in the Signature
@@ -49,13 +49,23 @@ internals.SigningCertPath = '/SimpleNotificationService-0123456789abcdef01234567
 internals.SigningCertURL = internals.SigningCertHost + internals.SigningCertPath;
 internals.SubscribeURL = 'https://sns.us-east-1.amazonaws.com/?Action=ConfirmSubscription?MoreStuff=MoreStuff';
 
-internals.validNotification = {
+internals.validNotificationSv1 = {
     Type: 'Notification',
     MessageId: internals.MessageId,
     TopicArn: internals.TopicArn,
-    Message: 'Hello SNS!',
+    Message: 'Hello SNS SignatureVersion 1!',
     Timestamp: (new Date()).toISOString(),
     SignatureVersion: '1',
+    SigningCertURL: internals.SigningCertURL
+};
+
+internals.validNotificationSv2 = {
+    Type: 'Notification',
+    MessageId: internals.MessageId,
+    TopicArn: internals.TopicArn,
+    Message: 'Hello SNS SignatureVersion 2!',
+    Timestamp: (new Date()).toISOString(),
+    SignatureVersion: '2',
     SigningCertURL: internals.SigningCertURL
 };
 
@@ -111,7 +121,8 @@ internals.Mock = class {
     SigningCertHost = internals.SigningCertHost;
     SigningCertPath = internals.SigningCertPath;
     SigningCertPathError = '/SimpleNotificationService-0123456789abcdef0123456789abcdee.pem';
-    validNotification = internals.addSignature(internals.validNotification);
+    validNotificationSv1 = internals.addSignature(internals.validNotificationSv1);
+    validNotificationSv2 = internals.addSignature(internals.validNotificationSv2, '2');
     validNotificationWithSubject = internals.addSignature(internals.validNotificationWithSubject);
     validSubscriptionConfirmation = internals.addSignature(internals.validSubscriptionConfirmation);
     validUnsubscribeConfirmation = internals.addSignature(internals.validUnsubscribeConfirmation);
@@ -123,7 +134,7 @@ internals.Mock = class {
         TopicArn: internals.TopicArn,
         Message: 'Hello SNS!',
         Timestamp: (new Date()).toISOString(),
-        SignatureVersion: '2',
+        SignatureVersion: '3',
         SigningCertUrl: internals.SigningCertURL
     };
 
