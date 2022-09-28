@@ -6,7 +6,9 @@ Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. T
 [![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/sns-payload-validator)](https://snyk.io/test/npm/sns-payload-validator)
 
 ## Status and Testing
-Check the [status](https://github.com/devinstewart/sns-tester/blob/main/status).  This module is tested daily at 12:00 UTC on a live AWS account using SNS via the code found in the [sns-tester](https://github.com/devinstewart/sns-tester) repository.
+Check the [status](https://github.com/devinstewart/sns-tester/blob/main/status) of a message signed with `SignatureVersion` 1, or check the [status](https://github.com/devinstewart/sns-tester/blob/main/status-sigV2) of a message signed with `SignatureVersion` 2. This module is tested daily at 12:00 UTC on a live AWS account using SNS via the code found in the [sns-tester](https://github.com/devinstewart/sns-tester) repository.
+
+**Please note:** While `SignatureVersion` 1 is the default, on 2022-09-19 [AWS announced](https://aws.amazon.com/blogs/security/sign-amazon-sns-messages-with-sha256-hashing-for-http-subscriptions/) the ability to set topics with `SignatureVersion` 2. Starting with version `1.1.0` of this module, `SignatureVersion` 1 and 2 are supported.
 ## Installing
 Using npm:
 ```bash
