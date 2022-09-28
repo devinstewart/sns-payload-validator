@@ -6,7 +6,7 @@ export interface SnsPayload {
     Subject?: string;
     Message: string;
     Timestamp: string;
-    SignatureVersion: '1';
+    SignatureVersion: '1' | '2';
     Signature: string;
     SigningCertURL: string;
     SubscribeURL?: string;

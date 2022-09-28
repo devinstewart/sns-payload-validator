@@ -24,12 +24,24 @@ describe('test validate() with promises', () => {
 
     setupMockBeforeEach();
 
-    it('succussfully validates HTTP/S Notification', () => {
+    it('succussfully validates HTTP/S Notification SignatureVersion 1', () => {
 
-        Validator.validate(Mock.validNotification)
+        Validator.validate(Mock.validNotificationSv1)
             .then((payload) => {
 
-                expect(payload).to.equal(Mock.validNotification);
+                expect(payload).to.equal(Mock.validNotificationSv1);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+
+    it('succussfully validates HTTP/S Notification SignatureVersion 2', () => {
+
+        Validator.validate(Mock.validNotificationSv2)
+            .then((payload) => {
+
+                expect(payload).to.equal(Mock.validNotificationSv2);
             }).catch((err) => {
 
                 expect(err).to.not.exist();
@@ -143,15 +155,27 @@ describe('test validate() with callbacks', () => {
 
     setupMockBeforeEach();
 
-    it('succussfully validates HTTP/S Notification', () => {
+    it('succussfully validates HTTP/S Notification SignatureVersion 1', () => {
 
-        Validator.validate(Mock.validNotification, (err, payload) => {
+        Validator.validate(Mock.validNotificationSv1, (err, payload) => {
 
             if (err) {
                 throw err;
             }
 
-            expect(payload).to.equal(Mock.validNotification);
+            expect(payload).to.equal(Mock.validNotificationSv1);
+        });
+    });
+
+    it('succussfully validates HTTP/S Notification SignatureVersion 2', () => {
+
+        Validator.validate(Mock.validNotificationSv2, (err, payload) => {
+
+            if (err) {
+                throw err;
+            }
+
+            expect(payload).to.equal(Mock.validNotificationSv2);
         });
     });
 
