@@ -11,10 +11,10 @@ Nock(Mock.SigningCertHost)
     .reply(200, Mock.pem);
 
 
-Validator.validate(Mock.validNotification)
+Validator.validate(Mock.validNotificationSv1)
     .then((payload: any) => {
 
-        expect(payload).to.equal(Mock.validNotification);
+        expect(payload).to.equal(Mock.validNotificationSv1);
     }).catch((err: any) => {
 
         expect(err).to.not.exist();
