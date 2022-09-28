@@ -3,8 +3,9 @@ Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. T
 
 [![Coverage Status](https://coveralls.io/repos/github/devinstewart/sns-payload-validator/badge.svg?branch=main)](https://coveralls.io/github/devinstewart/sns-payload-validator?branch=main)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/devinstewart/sns-payload-validator/ci)](https://github.com/devinstewart/sns-payload-validator/actions?query=workflow%3Aci+branch%3Amain)
-[![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/sns-payload-validator)](https://snyk.io/test/npm/sns-payload-validator)
-
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=security_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
 ## Status and Testing
 Check the [status](https://github.com/devinstewart/sns-tester/blob/main/status) of a message signed with `SignatureVersion` 1, or check the [status](https://github.com/devinstewart/sns-tester/blob/main/status-sigV2) of a message signed with `SignatureVersion` 2. This module is tested daily at 12:00 UTC on a live AWS account using SNS via the code found in the [sns-tester](https://github.com/devinstewart/sns-tester) repository.
 
