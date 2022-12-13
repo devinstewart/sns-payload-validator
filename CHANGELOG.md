@@ -1,3 +1,7 @@
+**v1.1.1 Node 19**
+- add Node 19 to CI tests
+- made `JSON.parse` fail with consistent error message
+
 **v1.1.0 SignatureVersion 2 Support**
 - added support for `SignatureVersion` 2
 - added badges to README.md from sonarcloud.io
