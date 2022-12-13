@@ -101,7 +101,7 @@ describe('test validate() with promises', () => {
         Validator.validate('invalidJson')
             .catch((err) => {
 
-                expect(err).to.be.error('Unexpected token i in JSON at position 0');
+                expect(err).to.be.error('Payload is not a valid JSON string');
             });
     });
 
@@ -232,7 +232,7 @@ describe('test validate() with callbacks', () => {
 
         Validator.validate('invalidJson', (err) => {
 
-            expect(err).to.be.error('Unexpected token i in JSON at position 0');
+            expect(err).to.be.error('Payload is not a valid JSON string');
         });
     });
 
