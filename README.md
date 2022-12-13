@@ -78,7 +78,7 @@ import { SnsPayload } from 'sns-payload-validator/interfaces';
 AWS SNS sends HTTP/S POSTS with the Content-Type of `text/plain`.  Therefore, if there is a need to manipulate the payload before sending it to the AWS SNS Payload Validator, `JSON.parse()` must be used. AWS SNS Payload Validator accepts the payload as a valid JSON `string` or a JavaScript `Object`.  The return value is parsed into a JavaScript `Object`, so it is recommended to do any manipulation on the return value.
 
 ## Examples with Types
-Not to be confused with TypesScript, AWS SNS Messages start with a `Type` field.  The `Type` is one of three values: `Notification`, `SubscriptionConfirmation` or `UnsubscribeConfirmation`.
+Not to be confused with TypeScript, AWS SNS Messages start with a `Type` field.  The `Type` is one of three values: `Notification`, `SubscriptionConfirmation` or `UnsubscribeConfirmation`.
 ### Subscribe / Unsubscribe
 If the endpoint should automaticaly subscribe when the a `SubscriptionConfirmation` is sent. **OR** if the endpoint should resubscribe if a `UnsubscribeConfirmation` is sent, the `SubscribeURL` can be used:
 ```javascript
