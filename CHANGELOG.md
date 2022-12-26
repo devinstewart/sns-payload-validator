@@ -1,3 +1,6 @@
+**v1.1.2 Badge Fix**
+- fix badge for build status, old one stopped working, no code changes
+
 **v1.1.1 Node 19**
 - add Node 19 to CI tests
 - made `JSON.parse` fail with consistent error message
