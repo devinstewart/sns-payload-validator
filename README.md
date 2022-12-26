@@ -2,7 +2,7 @@
 Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. The payload / error is then sent to either a Promise, or a callback if one is provided.
 
 [![Coverage Status](https://coveralls.io/repos/github/devinstewart/sns-payload-validator/badge.svg?branch=main)](https://coveralls.io/github/devinstewart/sns-payload-validator?branch=main)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/devinstewart/sns-payload-validator/ci)](https://github.com/devinstewart/sns-payload-validator/actions?query=workflow%3Aci+branch%3Amain)
+[![GitHub Workflow Status](https://github.com/devinstewart/sns-payload-validator/actions/workflows/ci-plugin.yml/badge.svg?branch=main)](https://github.com/devinstewart/sns-payload-validator/actions?query=workflow%3Aci+branch%3Amain)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=security_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=devinstewart_sns-payload-validator&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=devinstewart_sns-payload-validator)
