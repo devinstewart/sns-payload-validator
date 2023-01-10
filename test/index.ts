@@ -1,7 +1,7 @@
 import * as Code from '@hapi/code';
 import * as Nock from 'nock';
 
-import * as Validator from '../lib';
+const Validator = require('../lib/index.js');
 const Mock = require('./mock');
 
 const { expect } = Code;
@@ -9,7 +9,6 @@ const { expect } = Code;
 Nock(Mock.SigningCertHost)
     .get(Mock.SigningCertPath)
     .reply(200, Mock.pem);
-
 
 Validator.validate(Mock.validNotificationSv1)
     .then((payload: any) => {
