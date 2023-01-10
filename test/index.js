@@ -10,6 +10,8 @@ const Mock = require('./mock');
 const { it, describe, beforeEach } = exports.lab = Lab.script();
 const expect = Code.expect;
 
+const internals = {};
+
 const setupMockBeforeEach = () => {
 
     beforeEach(() => {
@@ -369,7 +371,7 @@ describe('test new Validator() error handling', () => {
 
         expect(() => {
 
-            new Validator({ useCache: 'invalid' });
+            internals.validator = new Validator({ useCache: 'invalid' });
         }).to.throw('useCache must be a boolean');
     });
 
@@ -377,7 +379,7 @@ describe('test new Validator() error handling', () => {
 
         expect(() => {
 
-            new Validator({ maxCerts: 'invalid' });
+            internals.validator = new Validator({ maxCerts: 'invalid' });
         }).to.throw('maxCerts must be a positive integer');
     });
 
@@ -385,7 +387,7 @@ describe('test new Validator() error handling', () => {
 
         expect(() => {
 
-            new Validator({ maxCerts: -1 });
+            internals.validator = new Validator({ maxCerts: -1 });
         }).to.throw('maxCerts must be a positive integer');
     });
 });
