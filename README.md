@@ -96,8 +96,10 @@ If the endpoint should automaticaly subscribe when the a `SubscriptionConfirmati
 const Validator = require('sns-payload-validator');
 const Https = require('https')
 
+const validator = new Validator();
+
 try {
-    const validPayload = await Validator.validate(payloadFromRequest)
+    const validPayload = await validator.validate(payloadFromRequest)
     if (validPayload.Type === 'SubscriptionConfirmation' || validPayload.Type === 'UnsubscribeConfirmation') {
         Https.get(validPayload.SubscribeURL, (res) => {
             // The route has been confirmed
@@ -117,9 +119,10 @@ To act on a message published, a `Notification` is sent and the `Message` can be
 
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
 try {
-    const validPayload = await Validator.validate(payloadFromRequest)
+    const validPayload = await validator.validate(payloadFromRequest)
     if (validPayload.Type === 'Notification') {
         console.log('Here is the message:', validPayload.Message);
         return;
@@ -137,9 +140,10 @@ Validating the payload of the Lambda is similar:
 
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
 exports.handler = async (event) => {
-    const validPayload = await Validator.validate(event.Records[0].Sns);
+    const validPayload = await validator.validate(event.Records[0].Sns);
     console.log('Here is the message:', validPayload.Message);
     return;
 }
