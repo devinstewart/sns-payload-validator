@@ -83,3 +83,4 @@ declare namespace SnsPayloadValidator {
 }
 
 export = SnsPayloadValidator;
+
