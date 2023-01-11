@@ -1,3 +1,7 @@
+**v2.0.0 Cache**
+- add lru-cache to cache the certificate keys from AWS. This is breaking change as the `Validator` now has to be instantiated with `new Validator()`
+- rearange the TypeScript definitions to align with the pattern in the aws-sdk
+
 **v1.1.2 Badge Fix**
 - fix badge for build status, old one stopped working, no code changes
 
