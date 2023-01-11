@@ -1,5 +1,5 @@
 # AWS SNS Payload Validator
-Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. The payload / error is then sent to either a Promise, or a callback if one is provided.
+Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda. The payload / error is then sent to either a Promise, or a callback if one is provided. Downloaded certificates can be cached.
 
 [![Coverage Status](https://coveralls.io/repos/github/devinstewart/sns-payload-validator/badge.svg?branch=main)](https://coveralls.io/github/devinstewart/sns-payload-validator?branch=main)
 [![GitHub Workflow Status](https://github.com/devinstewart/sns-payload-validator/actions/workflows/ci-plugin.yml/badge.svg?branch=main)](https://github.com/devinstewart/sns-payload-validator/actions?query=workflow%3Aci+branch%3Amain)
@@ -21,14 +21,14 @@ $ yarn add sns-payload-validator
 ```
 
 ## Getting started
-The **AWS SNS Payload Validator** validates that the payload is from AWS SNS by validating the `Type`, `SignatureVersion`, `SigningCertURL` and `Signature`.  For more on this process please see [Verifying the signatures of Amazon SNS messages](https://docs.aws.amazon.com/sns/latest/dg/sns-verify-signature-of-message.html). In HTTP/S there are three ways to validate the message:
-
+The **AWS SNS Payload Validator** validates that the payload is from AWS SNS by validating the `Type`, `SignatureVersion`, `SigningCertURL` and `Signature`.  For more on this process please see [Verifying the signatures of Amazon SNS messages](https://docs.aws.amazon.com/sns/latest/dg/sns-verify-signature-of-message.html). A `Validator` object must be first be instantiated. The payload is the passed to the objects `validate` method. When instantiating, the [cache options](#cache-options) can be set.  In HTTP/S there are three ways to validate the message:
 ### async/await with try/catch
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
 try {
-    const validPayload = await Validator.validate(payloadFromRequest)
+    const validPayload = await validator.validate(payloadFromRequest)
     // validPayload has been validated and its signature checked
 }
 catch (err) {
@@ -39,8 +39,9 @@ catch (err) {
 ### Promise Chaining
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
-Validator.validate(payloadFromRequest)
+validator.validate(payloadFromRequest)
     .then((validPayload) => {
         // validPayload has been validated and its signature checked
     })
@@ -52,8 +53,9 @@ Validator.validate(payloadFromRequest)
 ### Callbacks
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
-Validator.validate(payloadFromRequest, (err, validPayload) => {
+validator.validate(payloadFromRequest, (err, validPayload) => {
     if (err) {
         // payloadFromRequest could not be validated
         return;
@@ -77,6 +79,15 @@ import { SnsPayload } from 'sns-payload-validator/interfaces';
 ### The Payload
 AWS SNS sends HTTP/S POSTS with the Content-Type of `text/plain`.  Therefore, if there is a need to manipulate the payload before sending it to the AWS SNS Payload Validator, `JSON.parse()` must be used. AWS SNS Payload Validator accepts the payload as a valid JSON `string` or a JavaScript `Object`.  The return value is parsed into a JavaScript `Object`, so it is recommended to do any manipulation on the return value.
 
+## Cache Options
+The `Validator` object can be instantiated with the following cache options:
+* `useCache`: `boolean` - If `true`, the validator will cache the certificates it downloads from Amazon SNS using [lru-cache](https://www.npmjs.com/package/lru-cache). Default: `true`.
+* `maxCerts`: `number` - The maximum number of certificates to cache. Must be positive integer. Default: `1000`. If the number of certificates exceeds this value, the least recently used certificate will be removed from the cache.
+```javascript
+const Validator = require('sns-payload-validator');
+const validator = new Validator({ useCache: true, maxCerts: 100 });
+```
+
 ## Examples with Types
 Not to be confused with TypeScript, AWS SNS Messages start with a `Type` field.  The `Type` is one of three values: `Notification`, `SubscriptionConfirmation` or `UnsubscribeConfirmation`.
 ### Subscribe / Unsubscribe
@@ -85,8 +96,10 @@ If the endpoint should automaticaly subscribe when the a `SubscriptionConfirmati
 const Validator = require('sns-payload-validator');
 const Https = require('https')
 
+const validator = new Validator();
+
 try {
-    const validPayload = await Validator.validate(payloadFromRequest)
+    const validPayload = await validator.validate(payloadFromRequest)
     if (validPayload.Type === 'SubscriptionConfirmation' || validPayload.Type === 'UnsubscribeConfirmation') {
         Https.get(validPayload.SubscribeURL, (res) => {
             // The route has been confirmed
@@ -106,9 +119,10 @@ To act on a message published, a `Notification` is sent and the `Message` can be
 
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
 try {
-    const validPayload = await Validator.validate(payloadFromRequest)
+    const validPayload = await validator.validate(payloadFromRequest)
     if (validPayload.Type === 'Notification') {
         console.log('Here is the message:', validPayload.Message);
         return;
@@ -126,9 +140,10 @@ Validating the payload of the Lambda is similar:
 
 ```javascript
 const Validator = require('sns-payload-validator');
+const validator = new Validator();
 
 exports.handler = async (event) => {
-    const validPayload = await Validator.validate(event.Records[0].Sns);
+    const validPayload = await validator.validate(event.Records[0].Sns);
     console.log('Here is the message:', validPayload.Message);
     return;
 }

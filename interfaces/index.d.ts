@@ -1,5 +1,10 @@
 declare class SnsPayloadValidator {
     /**
+    * Instantiates a SnsPayloadValidator object.
+    */
+    constructor(options?: SnsPayloadValidator.Configuration)
+
+    /**
     * Validates an SNS payload and returns a Promise or passes it to the callback if provided.
     *
     * @param payload - The payload as a valid JSON string or Object sent in the HTTP/S body or Lambda event.
@@ -10,6 +15,18 @@ declare class SnsPayloadValidator {
 }
 
 declare namespace SnsPayloadValidator {
+    interface Configuration {
+        /**
+        * If true, the validator will cache the certificates it downloads from Amazon SNS using LRU Cache. Default: true.
+        */
+        useCache?: boolean;
+        /**
+        * The maximum number of certificates to cache. Must be positive integer. Default: 1000.
+        * If the number of certificates exceeds this value, the least recently used certificate will be removed from the cache.
+        */
+        maxCerts?: number;
+    }
+
     /**
     * The POST message of Amazon SNS values.
     */
@@ -66,3 +83,4 @@ declare namespace SnsPayloadValidator {
 }
 
 export = SnsPayloadValidator;
+

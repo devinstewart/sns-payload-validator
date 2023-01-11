@@ -10,7 +10,8 @@ Nock(Mock.SigningCertHost)
     .get(Mock.SigningCertPath)
     .reply(200, Mock.pem);
 
-Validator.validate(Mock.validNotificationSv1)
+const validator = new Validator();
+validator.validate(Mock.validNotificationSv1)
     .then((payload: any) => {
 
         expect(payload).to.equal(Mock.validNotificationSv1);

@@ -10,6 +10,8 @@ const Mock = require('./mock');
 const { it, describe, beforeEach } = exports.lab = Lab.script();
 const expect = Code.expect;
 
+const internals = {};
+
 const setupMockBeforeEach = () => {
 
     beforeEach(() => {
@@ -26,7 +28,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates HTTP/S Notification SignatureVersion 1', () => {
 
-        Validator.validate(Mock.validNotificationSv1)
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv1)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validNotificationSv1);
@@ -38,7 +41,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates HTTP/S Notification SignatureVersion 2', () => {
 
-        Validator.validate(Mock.validNotificationSv2)
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv2)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validNotificationSv2);
@@ -50,7 +54,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates HTTP/S Notification with Subject', () => {
 
-        Validator.validate(Mock.validNotificationWithSubject)
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationWithSubject)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validNotificationWithSubject);
@@ -62,7 +67,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates HTTP/S SubscriptionConfirmation', () => {
 
-        Validator.validate(Mock.validSubscriptionConfirmation)
+        const validator = new Validator();
+        validator.validate(Mock.validSubscriptionConfirmation)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validSubscriptionConfirmation);
@@ -74,7 +80,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates HTTP/S UnsubscribeConfirmation', () => {
 
-        Validator.validate(Mock.validUnsubscribeConfirmation)
+        const validator = new Validator();
+        validator.validate(Mock.validUnsubscribeConfirmation)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validUnsubscribeConfirmation);
@@ -86,7 +93,8 @@ describe('test validate() with promises', () => {
 
     it('succussfully validates Lambda Notification with null Subject', () => {
 
-        Validator.validate(Mock.validLambdaNotification)
+        const validator = new Validator();
+        validator.validate(Mock.validLambdaNotification)
             .then((payload) => {
 
                 expect(payload).to.equal(Mock.validLambdaNotification);
@@ -98,7 +106,8 @@ describe('test validate() with promises', () => {
 
     it('throws an error on invalid JSON', () => {
 
-        Validator.validate('invalidJson')
+        const validator = new Validator();
+        validator.validate('invalidJson')
             .catch((err) => {
 
                 expect(err).to.be.error('Payload is not a valid JSON string');
@@ -107,7 +116,8 @@ describe('test validate() with promises', () => {
 
     it('throws an error on unsupported Type', () => {
 
-        Validator.validate(Mock.invalidType)
+        const validator = new Validator();
+        validator.validate(Mock.invalidType)
             .catch((err) => {
 
                 expect(err).to.be.error('Invalid Type');
@@ -116,7 +126,8 @@ describe('test validate() with promises', () => {
 
     it('throws an error on unsupported SignatureVersion', () => {
 
-        Validator.validate(Mock.invalidSignatureVersion)
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignatureVersion)
             .catch((err) => {
 
                 expect(err).to.be.error('Invalid SignatureVersion');
@@ -125,7 +136,8 @@ describe('test validate() with promises', () => {
 
     it('throws an error on unsupported SigningCertURL', () => {
 
-        Validator.validate(Mock.invalidSigningCertURL)
+        const validator = new Validator();
+        validator.validate(Mock.invalidSigningCertURL)
             .catch((err) => {
 
                 expect(err).to.be.error('Invalid SigningCertURL');
@@ -134,7 +146,8 @@ describe('test validate() with promises', () => {
 
     it('throws an error on invalid Signature', () => {
 
-        Validator.validate(Mock.invalidSignature)
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignature)
             .catch((err) => {
 
                 expect(err).to.be.error('Invalid Signature');
@@ -143,7 +156,8 @@ describe('test validate() with promises', () => {
 
     it('throws "Invalid Signature" when Crypo.verify throws an error', () => {
 
-        Validator.validate(Mock.invalidSignatureNull)
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignatureNull)
             .catch((err) => {
 
                 expect(err).to.be.error('Invalid Signature');
@@ -157,7 +171,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates HTTP/S Notification SignatureVersion 1', () => {
 
-        Validator.validate(Mock.validNotificationSv1, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv1, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -169,7 +184,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates HTTP/S Notification SignatureVersion 2', () => {
 
-        Validator.validate(Mock.validNotificationSv2, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv2, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -181,7 +197,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates HTTP/S Notification with Subject', () => {
 
-        Validator.validate(Mock.validNotificationWithSubject, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationWithSubject, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -194,7 +211,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates HTTP/S SubscriptionConfirmation', () => {
 
-        Validator.validate(Mock.validSubscriptionConfirmation, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validSubscriptionConfirmation, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -206,7 +224,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates HTTP/S UnsubscribeConfirmation', () => {
 
-        Validator.validate(Mock.validUnsubscribeConfirmation, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validUnsubscribeConfirmation, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -218,7 +237,8 @@ describe('test validate() with callbacks', () => {
 
     it('succussfully validates Lambda Notification with null Subject', () => {
 
-        Validator.validate(Mock.validLambdaNotification, (err, payload) => {
+        const validator = new Validator();
+        validator.validate(Mock.validLambdaNotification, (err, payload) => {
 
             if (err) {
                 throw err;
@@ -230,7 +250,8 @@ describe('test validate() with callbacks', () => {
 
     it('throws an error on invalid JSON', () => {
 
-        Validator.validate('invalidJson', (err) => {
+        const validator = new Validator();
+        validator.validate('invalidJson', (err) => {
 
             expect(err).to.be.error('Payload is not a valid JSON string');
         });
@@ -238,7 +259,8 @@ describe('test validate() with callbacks', () => {
 
     it('throws an error on unsupported Type', () => {
 
-        Validator.validate(Mock.invalidType, (err) => {
+        const validator = new Validator();
+        validator.validate(Mock.invalidType, (err) => {
 
             expect(err).to.be.error('Invalid Type');
         });
@@ -246,7 +268,8 @@ describe('test validate() with callbacks', () => {
 
     it('throws an error on unsupported SignatureVersion', () => {
 
-        Validator.validate(Mock.invalidSignatureVersion, (err) => {
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignatureVersion, (err) => {
 
             expect(err).to.be.error('Invalid SignatureVersion');
         });
@@ -254,7 +277,8 @@ describe('test validate() with callbacks', () => {
 
     it('throws an error on unsupported SigningCertURL', () => {
 
-        Validator.validate(Mock.invalidSigningCertURL, (err) => {
+        const validator = new Validator();
+        validator.validate(Mock.invalidSigningCertURL, (err) => {
 
             expect(err).to.be.error('Invalid SigningCertURL');
         });
@@ -262,7 +286,8 @@ describe('test validate() with callbacks', () => {
 
     it('throws an error on invalid Signature', () => {
 
-        Validator.validate(Mock.invalidSignature, (err) => {
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignature, (err) => {
 
             expect(err).to.be.error('Invalid Signature');
         });
@@ -270,10 +295,100 @@ describe('test validate() with callbacks', () => {
 
     it('throws "Invalid Signature" when Crypo.verify throws an error', () => {
 
-        Validator.validate(Mock.invalidSignatureNull, (err) => {
+        const validator = new Validator();
+        validator.validate(Mock.invalidSignatureNull, (err) => {
 
             expect(err).to.be.error('Invalid Signature');
         });
+    });
+});
+
+describe('test validate() with cache', () => {
+
+    setupMockBeforeEach();
+
+    it('succussfully gets puts item in cache', () => {
+
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv1)
+            .then(() => {
+
+                const certCacheItem = validator.certCache.get(Mock.SigningCertHost + Mock.SigningCertPath);
+                expect(certCacheItem).to.exist();
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+
+    it('succussfully uses the cache on second call', () => {
+
+        const validator = new Validator();
+        validator.validate(Mock.validNotificationSv1)
+            .then(() => {
+
+                const certCacheItem = validator.certCache.get(Mock.SigningCertHost + Mock.SigningCertPath);
+                expect(certCacheItem).to.exist();
+                validator.validate(Mock.validNotificationSv1)
+                    .then((payload) => {
+
+                        expect(payload).to.equal(Mock.validNotificationSv1);
+                    }).catch((err2) => {
+
+                        expect(err2).to.not.exist();
+                    });
+
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+
+    });
+});
+
+describe('test validate() without cache', () => {
+
+    setupMockBeforeEach();
+
+    it('succussfully gets puts item in cache', () => {
+
+        const validator = new Validator({ useCache: false });
+        validator.validate(Mock.validNotificationSv1)
+            .then(() => {
+
+                const certCache = validator.certCache;
+                expect(certCache).to.not.exist();
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+});
+
+describe('test new Validator() error handling', () => {
+
+    it('throws an error on invalid useCache', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ useCache: 'invalid' });
+        }).to.throw('useCache must be a boolean');
+    });
+
+    it('throws an error on invalid maxCerts type', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ maxCerts: 'invalid' });
+        }).to.throw('maxCerts must be a positive integer');
+    });
+
+    it('throws an error on invalid maxCerts value', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ maxCerts: -1 });
+        }).to.throw('maxCerts must be a positive integer');
     });
 });
 
@@ -286,8 +401,10 @@ describe('test getCert() error handling', () => {
             .get(Mock.SigningCertPathError)
             .replyWithError('HTTPS Error');
 
+        const validator = new Validator();
+
         try {
-            await Validator.validate(Mock.throwError);
+            await validator.validate(Mock.throwError);
         }
         catch (err) {
             expect(err).to.be.error('HTTPS Error');
