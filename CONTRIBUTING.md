@@ -25,5 +25,7 @@ As a DevSecOps engineer, I love modules without a lot of dependencies. As of ver
 - We include the funtionality needed in the module.
 - We create a separate module maintained here that includes the functionality needed.
 
+Starting with version `2.0.0`, the module will be using [lru-cache](https://www.npmjs.com/package/lru-cache) to cache the certificate keys from AWS.  This is a perfect example of using an external dependency, as lru-cache is a long proven and well maintained module.  There is no reason for us to recreate the wheel of caching.
+
 ### Conclusion
 I hope that this module is useful to you, and I hope that you will contribute to the project. -- Devin Stewart
