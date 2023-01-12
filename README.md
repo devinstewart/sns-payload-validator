@@ -68,7 +68,7 @@ validator.validate(payloadFromRequest, (err, validPayload) => {
 ### TypeScript
 TypeScript is also supported by using:
 ```typescript
-import Validator from 'sns-payload-validator';
+import * as Validator from 'sns-payload-validator';
 ```
 
 If you want to use the `SnsPayload` interface, you can import it using:
