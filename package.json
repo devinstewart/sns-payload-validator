@@ -1,6 +1,6 @@
 {
   "name": "sns-payload-validator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Node.js library that validates an AWS SNS payload of an HTTP/S POST or Lambda.",
   "main": "lib/index",
   "types": "lib/index.d.ts",
