@@ -3,23 +3,28 @@
 const Lab = require('@hapi/lab');
 const Code = require('@hapi/code');
 const Nock = require('nock');
+const Https = require('https');
 
 const Validator = require('..');
 const Mock = require('./mock');
 
-const { it, describe, beforeEach } = exports.lab = Lab.script();
+const { it, describe, beforeEach, afterEach } = exports.lab = Lab.script();
 const expect = Code.expect;
 
 const internals = {};
+
+let nockScope;
 
 const setupMockBeforeEach = () => {
 
     beforeEach(() => {
 
-        Nock(Mock.SigningCertHost)
+        nockScope = Nock(Mock.SigningCertHost)
             .get(Mock.SigningCertPath)
             .reply(200, Mock.pem);
     });
+
+    afterEach(() => Nock.cleanAll());
 };
 
 describe('test validate() with promises', () => {
@@ -99,6 +104,27 @@ describe('test validate() with promises', () => {
 
                 expect(payload).to.equal(Mock.validLambdaNotification);
             }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+
+    it('succussfully validates HTTP/S Notification with https agent', () => {
+
+        const requestAgent = new Https.Agent();
+        const validator = new Validator({
+            requestAgent
+        });
+        const nockRequestEventPromise = new Promise((resolve) => nockScope.once('request', (req) => resolve(req)));
+        validator.validate(Mock.validNotificationSv1)
+            .then((payload) => {
+
+                expect(payload).to.equal(Mock.validNotificationSv1);
+                return nockRequestEventPromise;
+            }).then(
+
+                (req) => expect(req.options.agent).equal(requestAgent)
+            ).catch((err) => {
 
                 expect(err).to.not.exist();
             });
@@ -248,6 +274,24 @@ describe('test validate() with callbacks', () => {
         });
     });
 
+    it('succussfully validates HTTP/S Notification with https agent', () => {
+
+        const requestAgent = new Https.Agent();
+        const validator = new Validator({
+            requestAgent
+        });
+        nockScope.once('request', (req) => expect(req.options.agent).equal(requestAgent));
+        validator.validate(Mock.validNotificationSv1, (err, payload) => {
+
+            if (err) {
+                throw err;
+            }
+
+            expect(payload).to.equal(Mock.validNotificationSv1);
+
+        });
+    });
+
     it('throws an error on invalid JSON', () => {
 
         const validator = new Validator();
@@ -389,6 +433,14 @@ describe('test new Validator() error handling', () => {
 
             internals.validator = new Validator({ maxCerts: -1 });
         }).to.throw('maxCerts must be a positive integer');
+    });
+
+    it('throws an error on invalid requestAgent value', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ requestAgent: {} });
+        }).to.throw('requestAgent must be a valid https agent');
     });
 });
 
