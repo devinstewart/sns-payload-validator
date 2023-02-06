@@ -1,3 +1,5 @@
+import { Agent } from 'https';
+
 declare class SnsPayloadValidator {
     /**
     * Instantiates a SnsPayloadValidator object.
@@ -25,6 +27,11 @@ declare namespace SnsPayloadValidator {
         * If the number of certificates exceeds this value, the least recently used certificate will be removed from the cache.
         */
         maxCerts?: number;
+
+        /**
+        * Optional https.Agent for downloading SigningCertURL
+        */
+        requestAgent?: Agent;
     }
 
     /**
