@@ -1,3 +1,6 @@
+**v2.1.0 Custom Request Agent**
+- add support for a custom request agent.
+
 **v2.0.0 Cache**
 - add lru-cache to cache the certificate keys from AWS. This is breaking change as the `Validator` now has to be instantiated with `new Validator()`
 - rearange the TypeScript definitions to align with the pattern in the aws-sdk
