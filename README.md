@@ -87,7 +87,12 @@ The `Validator` object can be instantiated with the following cache options:
 const Validator = require('sns-payload-validator');
 const validator = new Validator({ useCache: true, maxCerts: 100 });
 ```
-
+## Custom Request Agent
+If a custom request agent is needed, it can be passed to the `Validator` object, which will be used when making requests to download the certificate.  This is useful if you are behind a proxy.  By default the `Validator` object uses the `https` module.
+```javascript
+const Validator = require('sns-payload-validator');
+const validator = new Validator({ requestAgent: new ExternalProxyLib({ proxy: 'http://localhost:3000' }) });
+```
 ## Examples with Types
 Not to be confused with TypeScript, AWS SNS Messages start with a `Type` field.  The `Type` is one of three values: `Notification`, `SubscriptionConfirmation` or `UnsubscribeConfirmation`.
 ### Subscribe / Unsubscribe
