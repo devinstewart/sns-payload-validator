@@ -47,7 +47,10 @@ internals.TopicArn = 'arn:aws:sns:us-east-1:012345678910:test';
 internals.SigningCertHost = 'https://sns.us-east-1.amazonaws.com';
 internals.SigningCertPath = '/SimpleNotificationService-0123456789abcdef0123456789abcdef.pem';
 internals.SigningCertURL = internals.SigningCertHost + internals.SigningCertPath;
-internals.SubscribeURL = 'https://sns.us-east-1.amazonaws.com/?Action=ConfirmSubscription?MoreStuff=MoreStuff';
+internals.SubscribeHost = 'https://sns.us-east-1.amazonaws.com';
+internals.SubscribePath = '/';
+internals.SubscribeQueryParams = { Action: 'ConfirmSubscription', MoreStuff: 'MoreStuff' };
+internals.SubscribeURL = internals.SubscribeHost + internals.SubscribePath + '?Action=' + internals.SubscribeQueryParams.Action + '&MoreStuff=' + internals.SubscribeQueryParams.MoreStuff;
 
 internals.validNotificationSv1 = {
     Type: 'Notification',
@@ -120,6 +123,9 @@ internals.Mock = class {
     pem = Forge.pki.certificateToPem(cert);
     SigningCertHost = internals.SigningCertHost;
     SigningCertPath = internals.SigningCertPath;
+    SubscribeHost = internals.SubscribeHost;
+    SubscribePath = internals.SubscribePath;
+    SubscribeQueryParams = internals.SubscribeQueryParams;
     SigningCertPathError = '/SimpleNotificationService-0123456789abcdef0123456789abcdee.pem';
     validNotificationSv1 = internals.addSignature(internals.validNotificationSv1);
     validNotificationSv2 = internals.addSignature(internals.validNotificationSv2, '2');

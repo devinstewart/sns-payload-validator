@@ -14,14 +14,28 @@ const expect = Code.expect;
 const internals = {};
 
 let nockScope;
+const setupSigningCertNock = () => {
+
+    nockScope = Nock(Mock.SigningCertHost)
+        .get(Mock.SigningCertPath)
+        .reply(200, Mock.pem);
+};
+
+const setupSubscribeNock = () => {
+
+    Nock(Mock.SubscribeHost)
+        .get(Mock.SubscribePath)
+        .query(Mock.SubscribeQueryParams)
+        .reply(200, {});
+};
+
 
 const setupMockBeforeEach = () => {
 
     beforeEach(() => {
 
-        nockScope = Nock(Mock.SigningCertHost)
-            .get(Mock.SigningCertPath)
-            .reply(200, Mock.pem);
+        setupSigningCertNock();
+        setupSubscribeNock();
     });
 
     afterEach(() => Nock.cleanAll());
@@ -83,9 +97,35 @@ describe('test validate() with promises', () => {
             });
     });
 
+    it('succussfully validates HTTP/S SubscriptionConfirmation with autoSubscribe false', () => {
+
+        const validator = new Validator({ autoSubscribe: false });
+        validator.validate(Mock.validSubscriptionConfirmation)
+            .then((payload) => {
+
+                expect(payload).to.equal(Mock.validSubscriptionConfirmation);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+
     it('succussfully validates HTTP/S UnsubscribeConfirmation', () => {
 
         const validator = new Validator();
+        validator.validate(Mock.validUnsubscribeConfirmation)
+            .then((payload) => {
+
+                expect(payload).to.equal(Mock.validUnsubscribeConfirmation);
+            }).catch((err) => {
+
+                expect(err).to.not.exist();
+            });
+    });
+
+    it('successfully validates HTTP/S UnsubscribeConfirmation with autoreSubscribe false', () => {
+
+        const validator = new Validator({ autoreSubscribe: false });
         validator.validate(Mock.validUnsubscribeConfirmation)
             .then((payload) => {
 
@@ -248,9 +288,35 @@ describe('test validate() with callbacks', () => {
         });
     });
 
+    it('succussfully validates HTTP/S SubscriptionConfirmation with autoSubscribe false', () => {
+
+        const validator = new Validator({ autoSubscribe: false });
+        validator.validate(Mock.validSubscriptionConfirmation, (err, payload) => {
+
+            if (err) {
+                throw err;
+            }
+
+            expect(payload).to.equal(Mock.validSubscriptionConfirmation);
+        });
+    });
+
     it('succussfully validates HTTP/S UnsubscribeConfirmation', () => {
 
         const validator = new Validator();
+        validator.validate(Mock.validUnsubscribeConfirmation, (err, payload) => {
+
+            if (err) {
+                throw err;
+            }
+
+            expect(payload).to.equal(Mock.validUnsubscribeConfirmation);
+        });
+    });
+
+    it('successfully validates HTTP/S UnsubscribeConfirmation with autoResubscribe false', () => {
+
+        const validator = new Validator({ autoResubscribe: false });
         validator.validate(Mock.validUnsubscribeConfirmation, (err, payload) => {
 
             if (err) {
@@ -351,7 +417,7 @@ describe('test validate() with cache', () => {
 
     setupMockBeforeEach();
 
-    it('succussfully gets puts item in cache', () => {
+    it('succussfully puts item in cache', () => {
 
         const validator = new Validator();
         validator.validate(Mock.validNotificationSv1)
@@ -394,7 +460,7 @@ describe('test validate() without cache', () => {
 
     setupMockBeforeEach();
 
-    it('succussfully gets puts item in cache', () => {
+    it('succussfully does not put item in cache', () => {
 
         const validator = new Validator({ useCache: false });
         validator.validate(Mock.validNotificationSv1)
@@ -406,6 +472,40 @@ describe('test validate() without cache', () => {
 
                 expect(err).to.not.exist();
             });
+    });
+});
+
+describe('test subscribe() with Error', () => {
+
+    beforeEach(() => {
+
+        setupSigningCertNock();
+        Nock(Mock.SubscribeHost)
+            .get(Mock.SubscribePath)
+            .query(Mock.SubscribeQueryParams)
+            .replyWithError('HTTPS Error');
+    });
+
+    afterEach(() => Nock.cleanAll());
+
+    it('throws an error with async', async () => {
+
+        const validator = new Validator();
+        try {
+            await validator.validate(Mock.validSubscriptionConfirmation);
+        }
+        catch (err) {
+            expect(err).to.be.error('HTTPS Error');
+        }
+    });
+
+    it('throws an error with callback', () => {
+
+        const validator = new Validator();
+        validator.validate(Mock.validSubscriptionConfirmation, (err) => {
+
+            expect(err).to.be.error('HTTPS Error');
+        });
     });
 });
 
@@ -441,6 +541,22 @@ describe('test new Validator() error handling', () => {
 
             internals.validator = new Validator({ requestAgent: {} });
         }).to.throw('requestAgent must be a valid https agent');
+    });
+
+    it('throws an error on invalid autoSubscribe', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ autoSubscribe: 'invalid' });
+        }).to.throw('autoSubscribe must be a boolean');
+    });
+
+    it('throws an error on invalid autoResubscribe', () => {
+
+        expect(() => {
+
+            internals.validator = new Validator({ autoResubscribe: 'invalid' });
+        }).to.throw('autoResubscribe must be a boolean');
     });
 });
 

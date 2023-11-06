@@ -32,6 +32,16 @@ declare namespace SnsPayloadValidator {
         * Optional https.Agent for downloading SigningCertURL
         */
         requestAgent?: Agent;
+
+        /**
+         * Automatically Subscribe to the SNS Topic if Type is SubscriptionConfirmation. Default: true
+         */
+        autoSubscribe?: boolean;
+
+        /**
+         * Automatically Resubscribe to the SNS Topic if Type is UnsubscribeConfirmation. Default: true
+         */
+        autoResubscribe?: boolean;
     }
 
     /**
